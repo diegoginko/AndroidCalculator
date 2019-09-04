@@ -2,10 +2,13 @@ package com.diegoginko.androidcalculator
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.NumberFormatException
 
@@ -21,6 +24,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //seteo el toolbar
+        setSupportActionBar(findViewById(R.id.toolbar))
+        //habilito el home
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         resultado = findViewById(R.id.etResultado)
         numeroNuevo = findViewById(R.id.etCalculo)
@@ -119,5 +127,26 @@ class MainActivity : AppCompatActivity() {
         etResultado.setText(operador1.toString())
         numeroNuevo.setText("")
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_toolbar,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.configurar -> {
+            Toast.makeText(this,"Configurar",Toast.LENGTH_LONG).show()
+            true
+        }
+        android.R.id.home ->{
+            Toast.makeText(this,"Home", Toast.LENGTH_LONG).show()
+            true
+        }
+
+        else -> {
+            // Si se llega aca es por que no se reconoce la accion, invoco el default para que lo maneje
+            super.onOptionsItemSelected(item)
+        }
     }
 }
